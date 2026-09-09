@@ -1,0 +1,29 @@
+Jacobi[A0_, B0_, P0_, max_] :=
+ Module[{A = N[A0], B = N[B0], i, j, k = 0, n = Length[P0], P = P0,
+   Pold = P0},
+  Print[Subscript["p", 0], "=", P];
+
+  While[k < max,
+   For[i = 1, i <= n, i++,
+    P[[i]] = 1/A[[i, i]] (
+       B[[i]] + A[[i, i]]*P[[i]] -
+        Sum[A[[i, j]]*P[[j]], {j, 1, n}]
+       )
+    ];
+
+   Print[Subscript["p", k + 1], "=", P];
+   k = k + 1;
+   ];
+
+  Return[P];
+  ]
+
+A = {{2, -1, 0}, {1, 4, 2}, {0, 2, 6}};
+B = {-1, 3, 5};
+vars = {"x1", "x2", "x3"};
+
+Print["Solve the system"];
+Print[MatrixForm[A], MatrixForm[vars], "=", MatrixForm[B]]
+
+P = {1, 1, 1};
+X = Jacobi[A, B, P, 5]
